@@ -1,0 +1,200 @@
+<!-- <%- include('../layouts/header.ejs') %>
+<div class="container">
+    <h1 class="display-4">Add New User</h1>
+
+<div class="container">
+    <form action="" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="Enter Email" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile Number" required>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary my-2">Add User</button>
+    </form>
+    <% if (typeof message !== 'undefined') { %>
+        <p><%= message %></p>
+    <% } %>
+    <a href="/admin/dashboard" class="btn btn-secondary">Go Back</a>
+</div>
+</div>
+<script>
+
+
+
+
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const mobile = document.getElementById('mobile').value;
+
+        let isValid = true;
+
+        // Simple validation for name, email, and mobile fields
+        if (name.trim() === '') {
+            document.getElementById('nameError').textContent = 'Name is required';
+            isValid = false;
+        } else {
+            document.getElementById('nameError').textContent = '';
+        }
+
+        if (email.trim() === '' || !isValidEmail(email)) {
+            document.getElementById('emailError').textContent = 'Invalid email address';
+            isValid = false;
+        } else {
+            document.getElementById('emailError').textContent = '';
+        }
+
+        if (mobile.trim() === '' || !isValidMobile(mobile)) {
+            document.getElementById('mobileError').textContent = 'Invalid mobile number';
+            isValid = false;
+        } else {
+            document.getElementById('mobileError').textContent = '';
+        }
+
+        return isValid;
+    }
+
+    function isValidEmail(email) {
+        // Email validation using regex
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        return emailRegex.test(email);
+    }
+
+    function isValidMobile(mobile) {
+        // Mobile number validation (10 digits) using regex
+        const mobileRegex = /^\d{10}$/;
+        return mobileRegex.test(mobile);
+    }
+</script>
+
+<%- include('../layouts/footer.ejs') %> -->
+
+
+<%- include('../layouts/header.ejs') %>
+<div class="container">
+    <h1 class="display-4">Add New User</h1>
+
+    <div class="container">
+        <form action="" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>
+                <span id="nameError" class="error"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+                <span id="emailError" class="error"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile Number" required>
+                <span id="mobileError" class="error"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+                <span id="passwordError" class="error"></span>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary my-2">Add User</button>
+        </form>
+        <% if (typeof message !== 'undefined') { %>
+            <p><%= message %></p>
+        <% } %>
+        <a href="/admin/dashboard" class="btn btn-secondary">Go Back</a>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function (event) {
+            // Reset previous error messages
+            resetErrorMessages();
+
+            // Validate name
+            const nameInput = document.querySelector('input[name="name"]');
+            if (!validateName(nameInput.value)) {
+                displayErrorMessage(nameInput, 'Name is required and cannot contain only dots.');
+                event.preventDefault();
+                return;
+            }
+
+            // Validate email
+            const emailInput = document.querySelector('input[name="email"]');
+            if (!validateEmail(emailInput.value)) {
+                displayErrorMessage(emailInput, 'Please enter a valid email address.');
+                event.preventDefault();
+                return;
+            }
+
+            // Validate phone number
+            const phoneInput = document.querySelector('input[name="mobile"]');
+            if (!validatePhoneNumber(phoneInput.value)) {
+                displayErrorMessage(phoneInput, 'Phone number must be a 10-digit number.');
+                event.preventDefault();
+                return;
+            }
+
+            // Validate password
+            const passwordInput = document.querySelector('input[name="password"]');
+            if (!validatePassword(passwordInput.value)) {
+                displayErrorMessage(passwordInput, 'Password should contain at least 5 characters.');
+                event.preventDefault();
+                return;
+            }
+
+            // If all validations pass, the form will submit
+        });
+
+        // Existing validation functions
+
+        function validateName(name) {
+            // Name is required and should not contain only dots
+            return /^[^.]*[a-zA-Z]+[^.]*$/.test(name);
+        }
+
+        function validateEmail(email) {
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePhoneNumber(phone) {
+            // Phone number must be a 10-digit number
+            const phoneRegex = /^\d{10}$/;
+            return phoneRegex.test(phone);
+        }
+
+        function validatePassword(password) {
+            // Password must contain 5 characters
+            const passwordRegex = /.{5,}/;
+            return passwordRegex.test(password);
+        }
+
+        function displayErrorMessage(inputElement, message) {
+            const errorContainer = document.createElement('div');
+            errorContainer.className = 'error-message';
+            errorContainer.innerText = message;
+
+            // Add styling to the error message (you can customize this)
+            errorContainer.style.color = 'red';
+
+            inputElement.parentNode.appendChild(errorContainer);
+        }
+
+        function resetErrorMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(message => message.remove());
+        }
+    });
+</script>
+
+<%- include('../layouts/footer.ejs') %>

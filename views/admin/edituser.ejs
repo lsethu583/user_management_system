@@ -1,0 +1,26 @@
+<%- include('../layouts/header.ejs') %>
+
+<div class="container">
+    <h1>Edit User</h1>
+
+<form action="/admin/edit-user" method="POST" class="container">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="<%= user.name %>">
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" value="<%= user.email %>">
+    </div>
+    <div class="form-group">
+        <label for="mobile">Mobile</label>
+        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile" value="<%= user.mobile %>">
+    </div>
+    <input type="hidden" name="id" value="<%= user._id %>">
+    <button type="submit" class="btn btn-primary">Update User</button>
+</form>
+
+<a class="my-2" href="/admin/dashboard">Go to Dashboard</a>
+</div>
+
+<%- include('../layouts/footer.ejs') %>

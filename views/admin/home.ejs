@@ -1,0 +1,18 @@
+<%- include('../layouts/header.ejs') %>
+<div class="container my-3">
+  <h3>Welcome, <%= admin.name %></h3>
+  <a href="/admin/dashboard" class="btn btn-primary my-2">Dashboard</a>
+
+  <table class="table table-bordered table-striped">
+    <tr>
+      <td>Email</td>
+      <td><%= admin.email %></td>
+      <td>Mobile</td>
+      <td><%= admin.mobile %></td>
+    </tr>
+  </table>
+
+  <a href="/admin/logout" class="btn btn-danger">Logout</a>
+</div>
+<%- include('../layouts/footer.ejs') %>
+

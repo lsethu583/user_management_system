@@ -1,0 +1,10 @@
+<%- include('../layouts/header.ejs') %>
+
+<div class="container mt-5 w-25">
+    <h4 class="my-4">Confirm Deletion</h4>
+    <p>Are you sure you want to delete this user?</p>
+    <a href="/admin/delete-user?id=<%= userId %>&confirm=true" class="btn btn-danger">Yes, Delete</a>
+    <a href="/admin/dashboard" class="btn btn-secondary">No, Go Back</a>
+</div>
+
+<%- include('../layouts/footer.ejs') %>
